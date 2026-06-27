@@ -1,20 +1,45 @@
-\<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>shake999</title>
+
   <style>
+    :root {
+      --bg: #f8f8f6;
+      --paper: #ffffff;
+      --ink: #111111;
+      --sub: #2f3438;
+      --muted: #8a8f94;
+      --line: #e5e5e0;
+      --soft: #f1f2f2;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+      --max: 1120px;
+    }
+
     * {
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #0d0d0d;
-      color: #f5f5f5;
-      line-height: 1.7;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.75;
+      letter-spacing: -0.01em;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
     }
 
     a {
@@ -23,117 +48,190 @@
     }
 
     .site {
-      width: min(1100px, 92%);
+      width: min(var(--max), 92%);
       margin: 0 auto;
-      padding: 32px 0 60px;
+      padding: 34px 0 88px;
     }
 
-    header {
+    .nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 24px;
-      border-bottom: 1px solid #333;
+      padding-bottom: 26px;
+      border-bottom: 1px solid var(--line);
     }
 
-    .logo {
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing: -1px;
+    .wordmark {
+      font-size: 24px;
+      font-weight: 780;
+      letter-spacing: -0.08em;
     }
 
-    nav {
+    .nav-sub {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 520;
+    }
+
+    .nav-links {
       display: flex;
-      gap: 18px;
-      color: #aaa;
-      font-size: 14px;
+      align-items: center;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 620;
     }
 
-    nav a:hover {
-      color: #fff;
+    .nav-links a {
+      position: relative;
+      padding: 4px 0;
+      transition: color 0.18s ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.18s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .login-link {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 4px 0;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 620;
+      position: relative;
+    }
+
+    .login-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.18s ease;
+    }
+
+    .login-link:hover {
+      color: var(--ink);
+    }
+
+    .login-link:hover::after {
+      width: 100%;
     }
 
     .hero {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 28px;
-      margin-top: 36px;
-      align-items: stretch;
+      grid-template-columns: minmax(0, 1fr) 310px;
+      gap: 64px;
+      align-items: end;
+      padding: 76px 0 70px;
+      border-bottom: 1px solid var(--line);
     }
 
-    .intro,
-    .protein-card,
-    .post,
-    .about {
-      background: #171717;
-      border: 1px solid #2a2a2a;
-      border-radius: 22px;
-      padding: 28px;
-      box-shadow: 0 18px 50px rgba(0,0,0,0.25);
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin-bottom: 22px;
     }
 
-    .intro h1 {
-      font-size: clamp(42px, 7vw, 86px);
-      line-height: 0.95;
-      margin: 0 0 18px;
-      letter-spacing: -3px;
+    .kicker::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: var(--muted);
+      display: block;
     }
 
-    .intro p {
-      color: #cfcfcf;
-      max-width: 620px;
-      font-size: 18px;
+    .hero h1 {
       margin: 0;
+      max-width: 820px;
+      font-size: clamp(54px, 8.8vw, 124px);
+      line-height: 0.92;
+      font-weight: 780;
+      letter-spacing: -0.09em;
     }
 
-    .tag-row {
+    .hero p {
+      max-width: 580px;
+      margin: 28px 0 0;
+      color: var(--sub);
+      font-size: clamp(16px, 2vw, 20px);
+      line-height: 1.72;
+      letter-spacing: -0.025em;
+    }
+
+    .counter {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 22px 60px rgba(17, 17, 17, 0.06);
+    }
+
+    .counter-row {
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 24px;
-    }
-
-    .tag {
-      border: 1px solid #444;
-      border-radius: 999px;
-      padding: 6px 12px;
-      font-size: 13px;
-      color: #bbb;
-    }
-
-    .protein-card {
-      display: flex;
-      flex-direction: column;
       justify-content: space-between;
-      min-height: 360px;
-      background:
-        radial-gradient(circle at top right, rgba(255,255,255,0.12), transparent 35%),
-        #181818;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
     }
 
-    .protein-label {
-      color: #aaa;
-      font-size: 14px;
-      margin-bottom: 8px;
+    .counter-title {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      font-weight: 760;
     }
 
-    .protein-number {
-      font-size: clamp(82px, 12vw, 150px);
-      font-weight: 950;
-      line-height: 1;
-      letter-spacing: -6px;
+    .counter-badge {
+      font-size: 11px;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-weight: 700;
     }
 
-    .protein-goal {
+    .counter-number {
+      font-size: 72px;
+      line-height: 0.94;
+      letter-spacing: -0.08em;
+      font-weight: 760;
+    }
+
+    .counter-sub {
       margin-top: 12px;
-      color: #ccc;
-      font-size: 18px;
+      color: var(--muted);
+      font-size: 14px;
     }
 
     .progress {
       width: 100%;
-      height: 14px;
-      background: #2b2b2b;
+      height: 6px;
+      background: var(--soft);
       border-radius: 999px;
       overflow: hidden;
       margin: 22px 0;
@@ -142,246 +240,583 @@
     .progress-bar {
       height: 100%;
       width: 0%;
-      background: #f5f5f5;
+      background: var(--accent);
       border-radius: 999px;
-      transition: width 0.3s ease;
+      transition: width 0.28s ease;
     }
 
-    button {
-      width: 100%;
-      border: none;
-      border-radius: 16px;
-      padding: 16px 18px;
-      font-size: 16px;
-      font-weight: 800;
+    .counter-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .counter-buttons.single {
+      grid-template-columns: 1fr;
+    }
+
+    .btn {
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      background: var(--accent);
+      color: white;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 680;
       cursor: pointer;
-      background: #f5f5f5;
-      color: #111;
+      transition: transform 0.18s ease, opacity 0.18s ease;
     }
 
-    button:hover {
+    .btn.secondary {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .btn:hover {
       transform: translateY(-1px);
+      opacity: 0.86;
     }
 
-    .note {
-      color: #888;
+    .content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 310px;
+      gap: 64px;
+      padding-top: 54px;
+      align-items: start;
+    }
+
+    .section-label {
+      margin: 0 0 20px;
+      color: var(--muted);
       font-size: 12px;
-      margin-top: 10px;
+      letter-spacing: 0.08em;
+      font-weight: 760;
     }
 
-    main {
+    .article-list {
+      border-top: 1px solid var(--line);
+    }
+
+    details.article {
+      border-bottom: 1px solid var(--line);
+    }
+
+    summary {
+      list-style: none;
+      cursor: pointer;
       display: grid;
-      grid-template-columns: 1fr 320px;
-      gap: 28px;
-      margin-top: 28px;
+      grid-template-columns: 112px minmax(0, 1fr) 32px;
+      gap: 22px;
+      align-items: baseline;
+      padding: 26px 0;
     }
 
-    .section-title {
-      font-size: 14px;
-      color: #aaa;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin: 0 0 14px;
+    summary::-webkit-details-marker {
+      display: none;
     }
 
-    .posts {
-      display: grid;
-      gap: 18px;
+    .date {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 560;
+      font-variant-numeric: tabular-nums;
     }
 
-    .post h2 {
-      margin: 0 0 10px;
-      font-size: 26px;
-      letter-spacing: -1px;
+    .article-title {
+      font-size: clamp(24px, 3.2vw, 40px);
+      line-height: 1.08;
+      letter-spacing: -0.06em;
+      font-weight: 720;
+      transition: color 0.18s ease;
     }
 
-    .post p {
-      color: #cfcfcf;
-      margin: 0 0 16px;
+    summary:hover .article-title {
+      color: var(--accent);
     }
 
-    .meta {
+    .open-mark {
+      justify-self: end;
+      color: var(--muted);
+      font-size: 24px;
+      line-height: 1;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    details[open] .open-mark {
+      transform: rotate(45deg);
+      color: var(--ink);
+    }
+
+    .article-body {
+      padding: 0 0 34px 134px;
+      max-width: 760px;
+    }
+
+    .article-body p {
+      margin: 0 0 18px;
+      color: var(--sub);
+      font-size: 17px;
+      line-height: 1.85;
+    }
+
+    .tags {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      color: #888;
-      font-size: 13px;
+      margin-top: 18px;
     }
 
-    aside {
+    .tag {
+      color: var(--muted);
+      background: var(--soft);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 580;
+    }
+
+    .side {
       display: grid;
-      gap: 18px;
-      align-content: start;
+      gap: 34px;
+      position: sticky;
+      top: 28px;
     }
 
-    .about h3 {
-      margin: 0 0 10px;
+    .side-card {
+      border-top: 1px solid var(--line);
+      padding-top: 22px;
+    }
+
+    .side-card h2 {
+      margin: 0 0 12px;
       font-size: 22px;
+      line-height: 1.16;
+      letter-spacing: -0.055em;
+      font-weight: 740;
     }
 
-    .about p {
+    .side-card p {
       margin: 0;
-      color: #cfcfcf;
-      font-size: 15px;
+      color: var(--sub);
+      font-size: 14.5px;
+      line-height: 1.75;
     }
 
-    .small-list {
+    .rule-list {
       margin: 14px 0 0;
       padding-left: 18px;
-      color: #bbb;
+      color: var(--sub);
       font-size: 14px;
     }
 
-    footer {
-      margin-top: 40px;
-      padding-top: 24px;
-      border-top: 1px solid #333;
-      color: #777;
-      font-size: 13px;
-      text-align: center;
+    .rule-list li {
+      margin: 6px 0;
     }
 
-    @media (max-width: 850px) {
+    .tiny-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .tiny-nav a {
+      color: var(--muted);
+      background: var(--soft);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 620;
+    }
+
+    .tiny-nav a:hover {
+      color: var(--ink);
+    }
+
+    .admin {
+      margin-top: 64px;
+      padding-top: 44px;
+      border-top: 1px solid var(--line);
+    }
+
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 48px;
+      align-items: start;
+    }
+
+    .admin-copy h2 {
+      margin: 0;
+      font-size: 36px;
+      letter-spacing: -0.07em;
+      line-height: 1.05;
+      font-weight: 760;
+    }
+
+    .admin-copy p {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      font-weight: 700;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px 14px;
+      background: var(--paper);
+      color: var(--ink);
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+    }
+
+    textarea {
+      min-height: 170px;
+      resize: vertical;
+    }
+
+    .wide-btn {
+      width: 100%;
+      margin-top: 4px;
+      border-radius: 16px;
+      padding: 13px 14px;
+    }
+
+    .output {
+      display: none;
+      margin-top: 18px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .output pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 0;
+      color: var(--sub);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    footer {
+      margin-top: 66px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 940px) {
       .hero,
-      main {
+      .content,
+      .admin-grid {
         grid-template-columns: 1fr;
+        gap: 34px;
       }
 
-      header {
+      .hero {
+        padding: 52px 0 46px;
+      }
+
+      .side {
+        position: static;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .site {
+        width: min(100% - 34px, var(--max));
+        padding-top: 24px;
+      }
+
+      .nav {
         align-items: flex-start;
-        gap: 16px;
+        gap: 14px;
         flex-direction: column;
       }
 
-      .protein-card {
-        min-height: auto;
+      .nav-links {
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .hero h1 {
+        font-size: 58px;
+      }
+
+      summary {
+        grid-template-columns: 1fr 28px;
+        gap: 10px 14px;
+        padding: 24px 0;
+      }
+
+      .date {
+        grid-column: 1 / -1;
+      }
+
+      .article-body {
+        padding-left: 0;
+      }
+
+      .counter-number {
+        font-size: 64px;
       }
     }
   </style>
 </head>
+
 <body>
   <div class="site">
-    <header>
-      <div class="logo">shake999</div>
-      <nav>
-        <a href="#posts">記事</a>
-        <a href="#about">について</a>
-      </nav>
+    <nav class="nav">
+      <div class="wordmark">shake999</div>
+
+      <div class="nav-links">
+        <a href="#about">自己紹介</a>
+        <a href="#site">このサイト</a>
+        <button class="login-link" onclick="unlockAdmin()">管理ログイン</button>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div>
+        <div class="kicker">公開ノート</div>
+        <h1>しょうもないことも、考えたことも、ここに置く。</h1>
+      </div>
+
+      <section class="counter" aria-label="Protein Counter">
+        <div class="counter-row">
+          <div class="counter-title">Protein Counter</div>
+          <div class="counter-badge">目標 1000</div>
+        </div>
+
+        <div class="counter-number"><span id="proteinTotal">0</span></div>
+        <div class="counter-sub">あと <span id="proteinLeft">1000</span> 杯</div>
+
+        <div class="progress">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="counter-buttons single">
+          <button class="btn" onclick="addProtein()">＋1杯</button>
+        </div>
+      </section>
     </header>
 
-    <section class="hero">
-      <div class="intro">
-        <h1>思ったこと<br>書く。</h1>
-        <p>
-          ちゃんとしたことも、しょうもないことも、あとで自分が見返せるように残していく場所。
-        </p>
+    <main class="content">
+      <section>
+        <p class="section-label">最新の記録</p>
 
-        <div class="tag-row">
-          <span class="tag">日常</span>
-          <span class="tag">筋トレ</span>
-          <span class="tag">野球</span>
-          <span class="tag">考えたこと</span>
-          <span class="tag">プロテイン</span>
-        </div>
-      </div>
-
-      <div class="protein-card">
-        <div>
-          <div class="protein-label">PROTEIN TOTAL</div>
-          <div class="protein-number" id="proteinTotal">0</div>
-          <div class="protein-goal">目標：1000杯</div>
-
-          <div class="progress">
-            <div class="progress-bar" id="progressBar"></div>
-          </div>
-        </div>
-
-        <div>
-          <button onclick="addProtein()">プロテインを飲んだ</button>
-          <div class="note">※パスワードを知っている人だけ変更できます。</div>
-        </div>
-      </div>
-    </section>
-
-    <main>
-      <section id="posts">
-        <p class="section-title">Latest posts</p>
-
-        <div class="posts">
-          <article class="post">
-            <h2>最初の記事タイトル</h2>
-            <p>
-              ここに本文を書く。200文字でも1000文字でもOK。思ったことをそのまま書いて、
-              あとでAIに整えてもらう感じで続ける。
-            </p>
-            <div class="meta">
-              <span>2026.06.27</span>
-              <span>#日常</span>
-              <span>#考えたこと</span>
+        <div class="article-list" id="articleList">
+          <details class="article">
+            <summary>
+              <span class="date">2026.06.27</span>
+              <span class="article-title">最初の記事タイトル</span>
+              <span class="open-mark">＋</span>
+            </summary>
+            <div class="article-body">
+              <p>
+                ここに本文を書く。200文字でも1000文字でもいい。
+                思ったことをそのまま残して、あとで見返せるようにする。
+              </p>
+              <p>
+                ちゃんとした文章にしようとしすぎると続かないから、まず置く。
+                整えるのは後でいい。
+              </p>
+              <div class="tags">
+                <span class="tag">#日常</span>
+                <span class="tag">#考えたこと</span>
+              </div>
             </div>
-          </article>
+          </details>
 
-          <article class="post">
-            <h2>アメリカの飯について</h2>
-            <p>
-              ここに記事を書く。くだらないことでも、続けたらコンテンツになる。
-              まずは気軽に投稿を増やしていく。
-            </p>
-            <div class="meta">
-              <span>2026.06.27</span>
-              <span>#アメリカ</span>
-              <span>#飯</span>
+          <details class="article">
+            <summary>
+              <span class="date">2026.06.26</span>
+              <span class="article-title">プロテインを数える意味はない</span>
+              <span class="open-mark">＋</span>
+            </summary>
+            <div class="article-body">
+              <p>
+                意味はない。でも数えている。意味がないことを続けたら、少しだけ意味が出るかもしれない。
+                たぶん出ないかもしれない。
+              </p>
+              <div class="tags">
+                <span class="tag">#くだらない企画</span>
+                <span class="tag">#プロテイン</span>
+              </div>
             </div>
-          </article>
+          </details>
+
+          <details class="article">
+            <summary>
+              <span class="date">2026.06.25</span>
+              <span class="article-title">何もしてない日ほど残しておいた方がいい</span>
+              <span class="open-mark">＋</span>
+            </summary>
+            <div class="article-body">
+              <p>
+                何かした日だけ記録すると、何もしてない日の自分が消える。
+                でも実際は、何もしてない日の方が多分その人っぽい。
+              </p>
+              <div class="tags">
+                <span class="tag">#日常</span>
+                <span class="tag">#考えたこと</span>
+              </div>
+            </div>
+          </details>
         </div>
       </section>
 
-      <aside>
-        <section class="about" id="about">
-          <h3>このブログについて</h3>
+      <aside class="side">
+        <section class="side-card" id="about">
+          <h2>自己紹介</h2>
           <p>
-            思考の整理と記録用。人が見てくれたらそれはそれで嬉しい。
-            アメリカにいながら、野球、筋トレ、日常、その他どうでもいいことを書く。
+            shake999です。自己紹介はまだ考え中。
+            日常で思ったこと、しょうもない記録、たまに真面目なことを残します。
           </p>
         </section>
 
-        <section class="about">
-          <h3>更新</h3>
-          <p>気が向いたとき。</p>
-          <ul class="small-list">
-            <li>文章メイン</li>
-            <li>たまに写真</li>
-            <li>プロテインは数える</li>
+        <section class="side-card" id="site">
+          <h2>このサイトについて</h2>
+          <p>
+            金のためでも、無理に読ませるためでもなく、自分の中に残ったものを置いておく場所。
+            記事は読みたいものだけ開けばいい。
+          </p>
+
+          <ul class="rule-list">
+            <li>更新は気が向いたとき</li>
+            <li>記事は時系列</li>
+            <li>写真はあとで追加予定</li>
+            <li>コメント機能はいつか欲しい</li>
           </ul>
+
+          <div class="tiny-nav">
+            <a href="#about">about</a>
+            <a href="#site">site</a>
+            <a href="#admin">admin</a>
+          </div>
+        </section>
+
+        <section class="side-card">
+          <h2>変な記録</h2>
+          <p>
+            くだらないことも、続けたらちょっとだけ見たくなる。
+            そのための置き場。
+          </p>
         </section>
       </aside>
     </main>
 
+    <section class="admin" id="admin" style="display: none;">
+      <div class="admin-grid">
+        <div class="admin-copy">
+          <p class="section-label">管理</p>
+          <h2>記事を作る</h2>
+          <p>
+            自分用の記事作成フォーム。ここで作ったHTMLをGitHubの article-list の一番上に貼る。
+          </p>
+        </div>
+
+        <div>
+          <div id="adminForm">
+            <div class="form-grid">
+              <label>
+                日付
+                <input id="postDate" type="text" placeholder="2026.06.27">
+              </label>
+
+              <label>
+                タイトル
+                <input id="postTitle" type="text" placeholder="アメリカの飯、普通にまずい">
+              </label>
+
+              <label>
+                タグ
+                <input id="postTags" type="text" placeholder="日常, アメリカ, 考えたこと">
+              </label>
+
+              <label>
+                写真URL
+                <input id="postImage" type="text" placeholder="今は空欄でOK">
+              </label>
+
+              <label>
+                本文
+                <textarea id="postBody" placeholder="ここに本文を書く"></textarea>
+              </label>
+
+              <button class="btn wide-btn" onclick="generateArticle()">記事HTMLを作る</button>
+            </div>
+
+            <div class="output" id="outputBox">
+              <pre id="outputCode"></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <footer>
-      © shake999
+      <span>© shake999</span>
+      <span>読まなくてもいいけど、残しておく。</span>
     </footer>
   </div>
 
   <script>
-    // ここを変えると、最初に表示される合計杯数を変更できます
-    const INITIAL_TOTAL = 0;
-
-    const GOAL = 1000;
     const PASSWORD = "jinkobayakawa";
+    const GOAL = 1000;
+
+    // 全員に見せる初期値を変えたい時はここを変更
+    const INITIAL_TOTAL = 0;
 
     let total = Number(localStorage.getItem("proteinTotal")) || INITIAL_TOTAL;
 
     function updateProteinDisplay() {
-      document.getElementById("proteinTotal").textContent = total;
+      const totalEl = document.getElementById("proteinTotal");
+      const leftEl = document.getElementById("proteinLeft");
+      const barEl = document.getElementById("progressBar");
+
+      totalEl.textContent = total;
+      leftEl.textContent = Math.max(GOAL - total, 0);
 
       const percent = Math.min((total / GOAL) * 100, 100);
-      document.getElementById("progressBar").style.width = percent + "%";
+      barEl.style.width = percent + "%";
+    }
+
+    function checkPassword() {
+      const input = prompt("パスワードを入力してください");
+      return input === PASSWORD;
     }
 
     function addProtein() {
-      const input = prompt("パスワードを入力してください");
-
-      if (input !== PASSWORD) {
+      if (!checkPassword()) {
         alert("パスワードが違います");
         return;
       }
@@ -389,6 +824,90 @@
       total += 1;
       localStorage.setItem("proteinTotal", total);
       updateProteinDisplay();
+    }
+
+    function setProtein() {
+      if (!checkPassword()) {
+        alert("パスワードが違います");
+        return;
+      }
+
+      const value = prompt("合計杯数を入力してください", total);
+      if (value === null) return;
+
+      const number = Number(value);
+
+      if (Number.isNaN(number) || number < 0) {
+        alert("0以上の数字を入力してください");
+        return;
+      }
+
+      total = Math.floor(number);
+      localStorage.setItem("proteinTotal", total);
+      updateProteinDisplay();
+    }
+
+    function escapeHtml(text) {
+      return text
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function unlockAdmin() {
+      if (!checkPassword()) {
+        alert("パスワードが違います");
+        return;
+      }
+
+      const admin = document.getElementById("admin");
+      admin.style.display = "block";
+      admin.scrollIntoView({ behavior: "smooth" });
+    }
+
+    function generateArticle() {
+      const date = escapeHtml(document.getElementById("post日付").value.trim() || "2026.06.27");
+      const title = escapeHtml(document.getElementById("postタイトル").value.trim() || "無題");
+      const tagsRaw = document.getElementById("postタグ").value.trim();
+      const image = escapeHtml(document.getElementById("postImage").value.trim());
+      const bodyRaw = document.getElementById("post本文").value.trim() || "本文を書く。";
+
+      const paragraphs = bodyRaw
+        .split(/\n+/)
+        .map(p => `              <p>${escapeHtml(p)}</p>`)
+        .join("\n");
+
+      const tags = tagsRaw
+        ? tagsRaw.split(",").map(tag => tag.trim()).filter(Boolean)
+        : [];
+
+      const tagHtml = tags
+        .map(tag => `                <span class="tag">#${escapeHtml(tag.replace(/^#/, ""))}</span>`)
+        .join("\n");
+
+      const imageHtml = image
+        ? `\n              <img src="${image}" alt="" style="width:100%; border:1px solid var(--line); border-radius:22px; margin:0 0 20px;">`
+        : "";
+
+      const articleHtml =
+`          <details class="article">
+            <summary>
+              <span class="date">${date}</span>
+              <span class="article-title">${title}</span>
+              <span class="open-mark">＋</span>
+            </summary>
+            <div class="article-body">${imageHtml}
+${paragraphs}
+              <div class="tags">
+${tagHtml}
+              </div>
+            </div>
+          </details>`;
+
+      document.getElementById("outputCode").textContent = articleHtml;
+      document.getElementById("outputBox").style.display = "block";
     }
 
     updateProteinDisplay();
