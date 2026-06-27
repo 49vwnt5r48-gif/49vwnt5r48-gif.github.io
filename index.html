@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>shake999</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f3ee;
+      --ink: #111111;
+      --muted: #888;
+      --border: #d8d4cc;
+      --red: #e03030;
+      --surface: #ffffff;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Noto Sans JP', sans-serif;
+      line-height: 1.7;
+    }
+
+    /* ── HEADER ── */
+    header {
+      padding: 0 32px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--ink);
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
+    }
+
+    .site-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 2px;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .site-title span { color: var(--red); }
+
+    nav { display: flex; gap: 28px; }
+    nav a {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color .2s;
+    }
+    nav a:hover { color: var(--ink); }
+
+    /* ── HERO ── */
+    .hero {
+      border-bottom: 2px solid var(--ink);
+      display: grid;
+      grid-template-columns: 1fr 340px;
+    }
+
+    .hero-left {
+      padding: 56px 40px 48px;
+      border-right: 2px solid var(--ink);
+    }
+
+    .hero-eyebrow {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 20px;
+    }
+
+    .hero-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(64px, 9vw, 120px);
+      line-height: 0.92;
+      letter-spacing: -1px;
+      margin-bottom: 28px;
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.7;
+      border-left: 3px solid var(--red);
+      padding-left: 16px;
+    }
+
+    .hero-right {
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .stat-block { margin-bottom: 32px; }
+    .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .stat-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 52px;
+      line-height: 1;
+      color: var(--ink);
+    }
+    .stat-value.red { color: var(--red); }
+
+    .protein-btn {
+      background: var(--ink);
+      color: var(--bg);
+      border: none;
+      padding: 14px 20px;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      transition: background .2s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .protein-btn:hover { background: var(--red); }
+    .protein-btn span { font-size: 18px; }
+
+    /* ── TICKER ── */
+    .ticker {
+      border-bottom: 2px solid var(--ink);
+      background: var(--ink);
+      color: var(--bg);
+      padding: 10px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .ticker-inner {
+      display: inline-block;
+      animation: ticker 25s linear infinite;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .ticker-sep { color: var(--red); margin: 0 20px; }
+
+    /* ── POSTS GRID ── */
+    .posts-section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 32px 80px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 12px;
+    }
+    .section-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      letter-spacing: 1px;
+    }
+    .section-link {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+    .section-link:hover { color: var(--red); }
+
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 2px solid var(--ink);
+    }
+
+    .post-card {
+      padding: 28px 24px;
+      border-right: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+      cursor: pointer;
+      transition: background .15s;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .post-card:nth-child(3n) { border-right: none; }
+    .post-card:nth-last-child(-n+3) { border-bottom: none; }
+    .post-card:hover { background: var(--ink); color: var(--bg); }
+    .post-card:hover .post-meta-date,
+    .post-card:hover .post-excerpt { color: #aaa; }
+    .post-card:hover .post-tag { border-color: #aaa; color: #aaa; }
+
+    .post-tag {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border: 1px solid var(--ink);
+      padding: 2px 8px;
+      margin-bottom: 12px;
+    }
+    .post-title {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 10px;
+      letter-spacing: -0.2px;
+    }
+    .post-excerpt {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .post-meta-date {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+
+    /* FEATURED POST */
+    .post-card.featured {
+      grid-column: span 2;
+      border-right: 2px solid var(--ink);
+    }
+    .post-card.featured .post-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+      line-height: 1.1;
+      letter-spacing: 0.5px;
+    }
+
+    /* ── ABOUT STRIP ── */
+    .about-strip {
+      background: var(--ink);
+      color: var(--bg);
+      padding: 48px 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      border-top: 2px solid var(--ink);
+    }
+    .about-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+    .about-title span { color: var(--red); }
+    .about-text { font-size: 14px; color: #aaa; line-height: 1.8; }
+
+    .facts-list { list-style: none; }
+    .facts-list li {
+      padding: 14px 0;
+      border-bottom: 1px solid #333;
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+    }
+    .facts-list li:last-child { border-bottom: none; }
+    .fact-key {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: #666;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .fact-val { color: var(--bg); font-weight: 500; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 2px solid var(--ink);
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 2px;
+    }
+    .footer-title span { color: var(--red); }
+    .footer-note {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { border-top: 2px solid var(--ink); }
+      .posts-grid { grid-template-columns: 1fr; }
+      .post-card { border-right: none !important; }
+      .post-card.featured { grid-column: span 1; }
+      .about-strip { grid-template-columns: 1fr; }
+      nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="site-title" href="#">shake<span>999</span></a>
+  <nav>
+    <a href="#">記事</a>
+    <a href="#">について</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">変人の雑記</div>
+    <h1 class="hero-headline">思った<br>こと<br>書く。</h1>
+    <p class="hero-sub">
+      思ったことをそのまま書く。<br>
+      読んでくれたら嬉しい。
+    </p>
+  </div>
+  <div class="hero-right">
+    <div>
+      <div class="stat-block">
+        <div class="stat-label">PROTEIN TOTAL</div>
+        <div class="stat-value red" id="proteinTotal">247</div>
+      </div>
+    </div>
+    <button class="protein-btn" onclick="addProtein()">
+      プロテイン飲んだ <span>+</span>
+    </button>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <span class="ticker-inner">
+    プロテインを飲みます <span class="ticker-sep">★</span>
+    ジム週7 <span class="ticker-sep">★</span>
+    D1目指してます <span class="ticker-sep">★</span>
+    アメリカの飯はまずい <span class="ticker-sep">★</span>
+    練習は緩い <span class="ticker-sep">★</span>
+    思ったこと書きます <span class="ticker-sep">★</span>
+    プロテインを飲みます <span class="ticker-sep">★</span>
+    ジム週7 <span class="ticker-sep">★</span>
+    D1目指してます <span class="ticker-sep">★</span>
+    アメリカの飯はまずい <span class="ticker-sep">★</span>
+    練習は緩い <span class="ticker-sep">★</span>
+    思ったこと書きます <span class="ticker-sep">★</span>
+  </span>
+</div>
+
+<!-- POSTS -->
+<section class="posts-section">
+  <div class="section-header">
+    <span class="section-heading">最近の記事</span>
+    <a href="#" class="section-link">全部見る →</a>
+  </div>
+
+  <div class="posts-grid">
+
+    <a class="post-card featured" href="#">
+      <span class="post-tag">野球</span>
+      <div class="post-title">アメリカの野球部、練習が緩すぎて最初は正直なめてた。</div>
+      <p class="post-excerpt">日本の野球部と比べると全体練習は半分以下。でも個人の自主性が全然違う。慣れるまで3ヶ月かかった話。</p>
+      <div class="post-meta-date">2026.06.27</div>
+    </a>
+
+    <a class="post-card" href="#">
+      <span class="post-tag">筋トレ</span>
+      <div class="post-title">ジムに週7で行くとどうなるか</div>
+      <p class="post-excerpt">別に何も変わらない。ただ行かない日が気持ち悪くなる。</p>
+      <div class="post-meta-date">2026.06.24</div>
+    </a>
+
+    <a class="post-card" href="#">
+      <span class="post-tag">アメリカ</span>
+      <div class="post-title">アメリカの食事が本当にまずい話</div>
+      <p class="post-excerpt">慣れるとか言ってた人がいたけど、慣れない。</p>
+      <div class="post-meta-date">2026.06.20</div>
+    </a>
+
+    <a class="post-card" href="#">
+      <span class="post-tag">雑記</span>
+      <div class="post-title">D1を目指している理由を説明できるか自分に問いかけた</div>
+      <p class="post-excerpt">うまく説明できなかった。でもやめる理由もなかった。</p>
+      <div class="post-meta-date">2026.06.15</div>
+    </a>
+
+    <a class="post-card" href="#">
+      <span class="post-tag">プロテイン</span>
+      <div class="post-title">247杯目を達成した感想</div>
+      <p class="post-excerpt">特になし。248杯目に向かう。</p>
+      <div class="post-meta-date">2026.06.10</div>
+    </a>
+
+    <a class="post-card" href="#">
+      <span class="post-tag">雑記</span>
+      <div class="post-title">このブログを始めた理由</div>
+      <p class="post-excerpt">記録。思考の整理。承認欲求。暇つぶし。以上。</p>
+      <div class="post-meta-date">2026.06.01</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-strip">
+  <div>
+    <div class="about-title">shake<span>999</span><br>とは</div>
+    <p class="about-text">
+      思ったことをそのまま書く。<br>
+      野球やって、筋トレして、プロテイン飲む。<br>
+      アメリカから書いてます。<br><br>
+      更新は気が向いたとき。
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-title">shake<span>999</span></div>
+  <div class="footer-note">アメリカから書いてます — 2026</div>
+</footer>
+
+<script>
+  let total = 247;
+  function addProtein() {
+    total++;
+    document.getElementById('proteinTotal').textContent = total;
+    const btn = document.querySelector('.protein-btn');
+    btn.style.background = '#e03030';
+    setTimeout(() => btn.style.background = '', 300);
+  }
+</script>
+
+</body>
+</html>
